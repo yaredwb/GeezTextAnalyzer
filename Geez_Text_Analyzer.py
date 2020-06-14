@@ -3,6 +3,7 @@ import numpy as np
 import pandas as pd
 import plotly.express as px
 from PIL import Image
+from itertools import groupby
 
 st.title('የፊደል ዝርያ ቆጣሪ')
 
@@ -101,6 +102,33 @@ if st.checkbox('ከምሳሌ ጽሑፉ ውስጥ እያንዳንዱን የፊደ
   m = st.selectbox('ዝርያ', (options))
   index = options.index(m)  
   st.write(zeroch[index])
+
+# Further analysis of geez and sads varieties
+geez_freq = {x : z1.count(x) for x in z1}
+sads_freq = {x : z6.count(x) for x in z6}
+
+geez_freq_ordered = {}
+for k in sorted(geez_freq, key=geez_freq.get, reverse=True):
+  geez_freq_ordered[k] = geez_freq[k]
+
+sads_freq_ordered = {}
+for k in sorted(sads_freq, key=sads_freq.get, reverse=True):
+  sads_freq_ordered[k] = sads_freq[k]
+  
+#st.write(geez_freq_ordered)
+#st.write(sads_freq_ordered)
+
+df_geez_freq = pd.DataFrame.from_dict(geez_freq_ordered, orient='index', columns=['ብዛት'])
+df_sads_freq = pd.DataFrame.from_dict(sads_freq_ordered, orient='index', columns=['ብዛት'])
+
+fig2 = px.bar(df_geez_freq, x=df_geez_freq.index, y='ብዛት', labels={'x':'ግዕዝ ዝርያ'})
+fig3 = px.bar(df_sads_freq, x=df_sads_freq.index, y='ብዛት', labels={'x':'ሣድስ ዝርያ'})
+
+if st.checkbox('Show Geez and Sads Frequencies', value=True):
+  st.write(df_geez_freq.T)
+  st.write(fig2)
+  st.write(df_sads_freq.T)
+  st.write(fig3)
 
 st.header('እና ምን ይጠበስ?')
 
