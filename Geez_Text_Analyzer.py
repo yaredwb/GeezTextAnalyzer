@@ -115,24 +115,49 @@ sads_freq_ordered = {}
 for k in sorted(sads_freq, key=sads_freq.get, reverse=True):
   sads_freq_ordered[k] = sads_freq[k]
   
-#st.write(geez_freq_ordered)
-#st.write(sads_freq_ordered)
-
 df_geez_freq = pd.DataFrame.from_dict(geez_freq_ordered, orient='index', columns=['ብዛት'])
 df_sads_freq = pd.DataFrame.from_dict(sads_freq_ordered, orient='index', columns=['ብዛት'])
 
-fig2 = px.bar(df_geez_freq, x=df_geez_freq.index, y='ብዛት', labels={'x':'ግዕዝ ዝርያ'})
-fig3 = px.bar(df_sads_freq, x=df_sads_freq.index, y='ብዛት', labels={'x':'ሣድስ ዝርያ'})
+df_geez_and_sads = pd.concat([df_geez_freq, df_sads_freq], sort=False)
+df_geez_and_sads = df_geez_and_sads.sort_values(by='ብዛት', ascending=False)
 
-if st.checkbox('Show Geez and Sads Frequencies', value=True):
-  st.write(df_geez_freq.T)
+st.header('የግዕዝ እና ሣድስ ዝርያዎች ድግግሞሽ')
+
+st.write('''ከግዕዝና ሣድስ ዝርያዎች በተደጋጋሚ የሚያጋጥሙት የትኞቹ እንደሆኑ ማወቅ ጠቃሚ ይሆናል። መጀመሪያ የሁለቱን ዝርያዎች ተቀዳሚ ድግግሞሾች ለየብቻ በማጥናት ከዚያም የሁለቱን ዝርያዎች ቅልቅል ተቀዳሚ ድግግሞሾች ማየት ይቻላል። ይህንን ትንታኔ እጅግ በጣም ብዙ ለሆነ ጽሑፍ በመተግበር እነዚህን ድግግሞሾች የተመለከተ አጠቃላይ ድምዳሜ ላይ መድረስ ይቻላል።''')
+
+n = st.number_input(
+  'የምን ያህል ዝርያዎች ድግግሞሽ',
+  value=15,
+  min_value=1,
+  step=1,
+  max_value=len(df_geez_and_sads.index)
+)
+
+fig2 = px.bar(df_geez_freq.head(n), x=df_geez_freq.index[0:n], y='ብዛት', labels={'x':'ግዕዝ ዝርያ'})
+fig3 = px.bar(df_sads_freq.head(n), x=df_sads_freq.index[0:n], y='ብዛት', labels={'x':'ሣድስ ዝርያ'})
+fig4 = px.bar(df_geez_and_sads.head(n), df_geez_and_sads.index[0:n], y='ብዛት', labels={'x':'ግዕዝና ሣድስ ዝርያዎች'})
+
+selection = st.selectbox('የትኞቹን ዝርያዎች', (
+  'የግዕዝ ዝርያዎች ድግግሞሽ',
+  'የሣድስ ዝርያዎች ድግግሞሽ',
+  'የግዕዝ እና ሣድስ ዝርያዎች ቅልቅል ድግግሞሽ'
+))
+
+if selection == 'የግዕዝ ዝርያዎች ድግግሞሽ':
+  st.table(df_geez_freq.head(n).T)
   st.write(fig2)
-  st.write(df_sads_freq.T)
+  
+if selection == 'የሣድስ ዝርያዎች ድግግሞሽ':
+  st.table(df_sads_freq.head(n).T)
   st.write(fig3)
+
+if selection == 'የግዕዝ እና ሣድስ ዝርያዎች ቅልቅል ድግግሞሽ':
+  st.table(df_geez_and_sads.head(n).T)
+  st.write(fig4)
 
 st.header('እና ምን ይጠበስ?')
 
-st.markdown('''ዓሳ በዘይት! :-) ማለቴ በጣም ቀልጣፋና በተቻለ መጠን አነስተኛ ቁጥር ያላቸዉን ቁልፎች በመጫን ለመጻፍ የሚያስችል ኪቦርድ ዲዛይን ለማድረግ ይህን ከግምት ውስጥ ማስገባት ወሳኝ ነው። ከተደጋጋሚ ሙከራ በኋላ እንዳስተዋልኩት በርግጥም ሣድስ ፊደላት ብዙ ጊዜ አብዛኛውን ቁጥር የሚይዙ ሲሆን የግዕዝ ዝርያ ፊደላት ደግሞ ብዙ ጊዜ በሁለተኛ ደረጃ ላይ ይመጣሉ። ምናልባትም በሣድስ እና በግዕዝ ፊደላት ላይ ደግሞ ተጨማሪ ምርመራ በማድረግና የትኞቹ ፊደላት በብዛት እንደሚያጋጥሙ በማየት ሁለቱንም ያመዛዘነ በጣም ቀልጣፋ ኪቦርድ መስራት የሚቻል ይመስለኛል። ሞባይል ላይ እስካሁን ከተጠቀምኩባቸው ኪቦርዶች `አገርኛ Compact` በሣድስ ላይ የተመሰረተና (ከአገርኛ ሌሎች አቀማመጦች በተጨማሪ) ለመጠቀም ቀላል የሆነ ኪቦርድ አለው። በሌላ በኩል የ`Microsoft Swiftkey Amharic` ኪቦርድ በዋናነት በግዕዝ ዝርያዎች ላይ የተመሰረተ ነው። በቅርቡ ከግዕዝ እና ከሣድስ ዝርያዎች የትኞቹ ፊደላት በብዛት እንደሚያጋጥሙ ለማሳየት እሞክራለሁ።
+st.markdown('''ዓሳ በዘይት! :-) ማለቴ በጣም ቀልጣፋና በተቻለ መጠን አነስተኛ ቁጥር ያላቸዉን ቁልፎች በመጫን ለመጻፍ የሚያስችል ኪቦርድ ዲዛይን ለማድረግ ይህን ከግምት ውስጥ ማስገባት ወሳኝ ነው። ከተደጋጋሚ ሙከራ በኋላ እንዳስተዋልኩት በርግጥም ሣድስ ፊደላት ብዙ ጊዜ አብዛኛውን ቁጥር የሚይዙ ሲሆን የግዕዝ ዝርያ ፊደላት ደግሞ ብዙ ጊዜ በሁለተኛ ደረጃ ላይ ይመጣሉ። ምናልባትም በሣድስ እና በግዕዝ ፊደላት ላይ ደግሞ ተጨማሪ ምርመራ በማድረግና የትኞቹ ፊደላት በብዛት እንደሚያጋጥሙ በማየት ሁለቱንም ያመዛዘነ በጣም ቀልጣፋ ኪቦርድ መስራት የሚቻል ይመስለኛል። ሞባይል ላይ እስካሁን ከተጠቀምኩባቸው ኪቦርዶች `አገርኛ Compact` በሣድስ ላይ የተመሰረተና (ከአገርኛ ሌሎች አቀማመጦች በተጨማሪ) ለመጠቀም ቀላል የሆነ ኪቦርድ አለው። በሌላ በኩል የ`Microsoft Swiftkey Amharic` ኪቦርድ በዋናነት በግዕዝ ዝርያዎች ላይ የተመሰረተ ነው። ~~በቅርቡ ከግዕዝ እና ከሣድስ ዝርያዎች የትኞቹ ፊደላት በብዛት እንደሚያጋጥሙ ለማሳየት እሞክራለሁ~~።
   ''')
 
 image = Image.open('images/amharic_keyboards.png')
