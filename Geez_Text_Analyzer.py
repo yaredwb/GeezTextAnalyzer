@@ -116,6 +116,6 @@ st.write(' ')
 st.markdown(  
   '''
   Made by Yared: 
-  [GitHub](https://github.com/yaredwb) [LinkedIn](https://www.linkedin.com/in/yaredworku/) [Twitter](https://twitter.com/yaredwb)
+  [GitHub](https://github.com/yaredwb) [LinkedIn](https://www.linkedin.com/in/yaredworku/) [Twitter](https://twitter.com/yaredwb) [Personal Website](https://yaredwb.com/)
   '''
 )
