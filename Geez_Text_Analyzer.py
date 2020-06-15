@@ -31,9 +31,9 @@ hams = 'ሄሌሔሜሤሬሴሼቄቔቤቬቴቼኄኔኜኤኬኼዌዔዜዤ
 sads = 'ህልሕምሥርስሽቅቕብቭትችኅንኝእክዅዕዝዥይድዽጅግጝጥጭጵጽፅፍፕ'
 sabe = 'ሆሎሖሞሦሮሶሾቆቖቦቮቶቾኆኖኞኦኮኾዎዖዞዦዮዶዾጆጎጞጦጮጶጾፆፎፖ'
 special = 'ሏሗሟሧሯሷሿቇቧቯቷቿኇኗኟኧኯዟዧዯዷዿጇጏጟጧጯጷጿፇፏፗቈቊቋቌቍቘቚቛቜቝኈኊኋኌኍኰኲኳኴኵዀዂዃዄዅጐጒጓጔጕፘፙፚ'
-punctuation = '፡።፣፤፥፦፧፨?"()'
+punctuation = '፡።፣፤፥፦፧፨?"().'
 numbers = '፩፪፫፬፭፮፯፰፱፲፳፴፵፶፷፸፹፺፻፼0123456789'
-latin = 'abcdefghijklmnopqrstuvwxyz,.;:[]{-+*}#@$%^&_`~|'
+latinplus = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZåøæÅØÆ,;:[]{-+*}#@$%^&_`~|'
 
 zer = np.array(['ግዕዝ', 'ካዕብ', 'ሣልስ', 'ራብዕ', 'ሓምስ', 'ሣድስ', 'ሳብዕ', 'ልዩ ዝርያ', 'ሥርዓተ ነጥብ', 'ቁጥር', 'ሌላ'])
 counts = np.zeros(11)
@@ -73,7 +73,7 @@ for fidel in fideloch:
   elif fidel in numbers:
     counts[9] += 1
     qutr.append(fidel)
-  elif fidel in latin:
+  elif fidel in latinplus:
     counts[10] += 1
     lela.append(fidel)
   else:
@@ -125,17 +125,21 @@ st.header('የግዕዝ እና ሣድስ ዝርያዎች ድግግሞሽ')
 
 st.write('''ከግዕዝና ሣድስ ዝርያዎች በተደጋጋሚ የሚያጋጥሙት የትኞቹ እንደሆኑ ማወቅ ጠቃሚ ይሆናል። መጀመሪያ የሁለቱን ዝርያዎች ተቀዳሚ ድግግሞሾች ለየብቻ በማጥናት ከዚያም የሁለቱን ዝርያዎች ቅልቅል ተቀዳሚ ድግግሞሾች ማየት ይቻላል። ይህንን ትንታኔ እጅግ በጣም ብዙ ለሆነ ጽሑፍ በመተግበር እነዚህን ድግግሞሾች የተመለከተ አጠቃላይ ድምዳሜ ላይ መድረስ ይቻላል።''')
 
+
+val = min(15, len(df_geez_freq.index))
+max_val = max(15, len(df_geez_and_sads.index))
+
 n = st.number_input(
   'የምን ያህል ዝርያዎች ድግግሞሽ',
-  value=15,
-  min_value=1,
+  value=val,
+  min_value=0,
   step=1,
-  max_value=len(df_geez_and_sads.index)
+  max_value=max_val
 )
 
 fig2 = px.bar(df_geez_freq.head(n), x=df_geez_freq.index[0:n], y='ብዛት', labels={'x':'ግዕዝ ዝርያ'})
 fig3 = px.bar(df_sads_freq.head(n), x=df_sads_freq.index[0:n], y='ብዛት', labels={'x':'ሣድስ ዝርያ'})
-fig4 = px.bar(df_geez_and_sads.head(n), df_geez_and_sads.index[0:n], y='ብዛት', labels={'x':'ግዕዝና ሣድስ ዝርያዎች'})
+fig4 = px.bar(df_geez_and_sads.head(n), df_geez_and_sads.index[0:n], y='ብዛት', labels={'x':'ግዕዝ/ሣድስ ዝርያ'})
 
 selection = st.selectbox('የትኞቹን ዝርያዎች', (
   'የግዕዝ ዝርያዎች ድግግሞሽ',
