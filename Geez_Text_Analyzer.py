@@ -3,6 +3,7 @@ import numpy as np
 import pandas as pd
 import plotly.express as px
 from PIL import Image
+from collections import Counter
 
 st.title('የፊደል ዝርያ ቆጣሪ')
 
@@ -115,8 +116,8 @@ if st.checkbox('ከምሳሌ ጽሑፉ ውስጥ እያንዳንዱን የፊደ
   st.write(zeroch[index])
 
 # Further analysis of geez and sads varieties
-geez_freq = {x : z1.count(x) for x in z1}
-sads_freq = {x : z6.count(x) for x in z6}
+geez_freq = Counter(z1)
+sads_freq = Counter(z6)
 
 geez_freq_ordered = {}
 for k in sorted(geez_freq, key=geez_freq.get, reverse=True):
@@ -176,15 +177,15 @@ selection = st.selectbox('የትኞቹን ዝርያዎች', (
 ))
 
 if selection == 'የግዕዝ ዝርያዎች ድግግሞሽ':
-  st.table(df_geez_freq.head(n).T)
+  st.dataframe(df_geez_freq.head(n).T)
   st.write(fig2)
 
 if selection == 'የሣድስ ዝርያዎች ድግግሞሽ':
-  st.table(df_sads_freq.head(n).T)
+  st.dataframe(df_sads_freq.head(n).T)
   st.write(fig3)
 
 if selection == 'የግዕዝ እና ሣድስ ዝርያዎች ቅልቅል ድግግሞሽ':
-  st.table(df_geez_and_sads.head(n).T)
+  st.dataframe(df_geez_and_sads.head(n).T)
   st.write(fig4)
 
 st.header('እና ምን ይጠበስ?')
