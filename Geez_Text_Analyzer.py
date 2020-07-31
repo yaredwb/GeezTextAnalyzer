@@ -42,9 +42,9 @@ hams = 'ሄሌሔሜሤሬሴሼቄቔቤቬቴቼኄኔኜኤኬኼዌዔዜዤ
 sads = 'ህልሕምሥርስሽቅቕብቭትችኅንኝእክዅውዕዝዥይድዽጅግጝጥጭጵጽፅፍፕ'
 sabe = 'ሆሎሖሞሦሮሶሾቆቖቦቮቶቾኆኖኞኦኮኾዎዖዞዦዮዶዾጆጎጞጦጮጶጾፆፎፖ'
 special = 'ሏሗሟሧሯሷሿቇቧቯቷቿኇኗኟኧኯዟዧዯዷዿጇጏጟጧጯጷጿፇፏፗቈቊቋቌቍቘቚቛቜቝኈኊኋኌኍኰኲኳኴኵዀዂዃዄዅጐጒጓጔጕፘፙፚ'
-punctuation = '፡።፣፤፥፦፧፨?!¡"().'
+punctuation = '፡።፣፤፥፦፧፨?!¡"()./“”—'
 numbers = '፩፪፫፬፭፮፯፰፱፲፳፴፵፶፷፸፹፺፻፼0123456789'
-latinplus = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZåøæÅØÆ,;:[]{-+*}#@$%^&_`~|'
+latinplus = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZåøæÅØÆ,;:[]{-+*}#@$%^&_`~|<>'
 
 zer = np.array(['ግዕዝ', 'ካዕብ', 'ሣልስ', 'ራብዕ', 'ሓምስ', 'ሣድስ',
                 'ሳብዕ', 'ልዩ ዝርያ', 'ሥርዓተ ነጥብ', 'ቁጥር', 'ሌላ'])
