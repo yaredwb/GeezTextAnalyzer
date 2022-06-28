@@ -202,7 +202,11 @@ st.markdown('''ዓሳ በዘይት! :-) ማለቴ በጣም ቀልጣፋና በ�
   ''')
 
 image = Image.open('images/amharic_keyboards.png')
-st.image(image, caption='የ\'Microsoft Swiftkey Amharic\' እና የ\'አገርኛ Compact\' ኪቦርዶች አቀማመጥ', use_column_width=True)
+st.image(
+  image,
+  caption='የ\'Microsoft Swiftkey Amharic\' እና የ\'አገርኛ Compact\' ኪቦርዶች አቀማመጥ',
+  use_column_width=True
+)
 
 st.write(' ')
 st.write(' ')
